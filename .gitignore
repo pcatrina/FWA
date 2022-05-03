@@ -1,5 +1,6 @@
 .idea
 target
 tools
+docker
 !tools/.keep
 *.swp
