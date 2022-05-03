@@ -1,10 +1,10 @@
 package edu.school21.cinema.servlets;
 
 import edu.school21.cinema.services.UserService;
+import edu.school21.cinema.services.impl.UserServiceImpl;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 
 import java.io.IOException;
@@ -12,8 +12,14 @@ import java.io.IOException;
 @WebServlet(name = "SignUpServlet", value = "/signUp")
 public class SignUpServlet extends HttpServlet {
 
-//    @Autowired
-//    private UserService userService;
+    private UserService userService;
+
+    @Override
+    public void init(ServletConfig config) throws ServletException {
+        ServletContext servletContext = config.getServletContext();
+        ApplicationContext springContext = (ApplicationContext) servletContext.getAttribute("springContext");
+        this.userService = springContext.getBean(UserServiceImpl.class);
+    }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -23,6 +29,6 @@ public class SignUpServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//        userService.createUser(request);
+        userService.createUser(request);
     }
 }
