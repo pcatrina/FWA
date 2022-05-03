@@ -8,6 +8,7 @@ if [ ! -d $TOMCAT_FOLDER ] || [ ! -d $TOMCAT_FOLDER/$TOMCAT_UNPACKED ]; then
 	[ ! -f ./$TOMCAT_ZIP ] && curl -O --insecure $TOMCAT_LINK
 	[ -f ./$TOMCAT_ZIP ] && unzip ./$TOMCAT_ZIP -d $TOMCAT_FOLDER
 	[ -f ./$TOMCAT_ZIP ] && rm $TOMCAT_ZIP
+	[ -d .$TOMCAT_FOLDER/$TOMCAT_UNPACKED ] && chmod +x $TOMCAT_FOLDER/$TOMCAT_UNPACKED/bin/catalina.sh
 fi
 
 
