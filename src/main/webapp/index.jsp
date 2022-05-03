@@ -12,5 +12,8 @@
 <br/>
 <br/>
 <a href="signUp">SignUp</a>
+<br/>
+<br/>
+<a href="signIn">SignIn</a>
 </body>
 </html>
