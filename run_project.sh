@@ -11,6 +11,7 @@ bash ./start_db.sh
 cd ..
 
 $MAVEN_EXECUTABLE clean package
-cp $WAR $CATALINA_HOME/webapps/cinema.war
+[ -d $CATALINA_HOME/webapps/ROOT ] && rm -rf $CATALINA_HOME/webapps/ROOT
+cp $WAR $CATALINA_HOME/webapps/ROOT.war
 $TOMCAT_EXECUTABLE run
 
