@@ -1,6 +1,6 @@
 package edu.school21.cinema.listner;
 
-import edu.school21.cinema.config.CommonConfig;
+import edu.school21.cinema.config.ContextConfig;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletContextEvent;
 import jakarta.servlet.ServletContextListener;
@@ -13,7 +13,7 @@ public class ApplicationListener implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent sce) {
         ServletContext servletContext = sce.getServletContext();
-        ApplicationContext springContext = new AnnotationConfigApplicationContext(CommonConfig.class);
+        ApplicationContext springContext = new AnnotationConfigApplicationContext(ContextConfig.class);
         servletContext.setAttribute("springContext", springContext);
     }
 }
