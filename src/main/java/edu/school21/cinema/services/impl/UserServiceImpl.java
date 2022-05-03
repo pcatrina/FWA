@@ -29,6 +29,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean checkUser(HttpServletRequest req) {
-
+        return false;
     }
 }
