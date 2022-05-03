@@ -4,6 +4,7 @@ import lombok.Value;
 
 @Value
 public class User {
+    Long id;
     String firstName;
     String lastName;
     String phone;
