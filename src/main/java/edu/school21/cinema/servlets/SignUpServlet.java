@@ -28,7 +28,7 @@ public class SignUpServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        userService.createUser(request);
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) {
+        userService.registerNewUser(request);
     }
 }

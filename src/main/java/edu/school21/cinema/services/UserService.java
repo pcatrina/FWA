@@ -4,5 +4,7 @@ import jakarta.servlet.http.HttpServletRequest;
 
 public interface UserService {
 
-    public void createUser(HttpServletRequest request);
+    public void registerNewUser(HttpServletRequest request);
+
+    boolean checkUser(HttpServletRequest req);
 }
