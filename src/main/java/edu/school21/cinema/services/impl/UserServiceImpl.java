@@ -19,27 +19,27 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void saveNewUser(User user) {
-//        User user =  getUser(user);
+        userRepository.saveUser(user);
 
         System.out.println(user.toString());
     }
 
     @Override
     public boolean checkUser(HttpServletRequest req) {
-        return userRepository.isUserExist(getUser(req));
+        return false;
     }
 
     @Override
     public Optional<User> getUser(String phone, String passwordDigest) {
-        return Optional.empty();
+        return userRepository.getUser(phone, passwordDigest);
     }
 
-    private User getUser(HttpServletRequest request){
-        return User.builder()
-                .firstName(request.getParameter("firstName"))
-                .lastName(request.getParameter("lastName"))
-                .phone(request.getParameter("phone"))
-                .password(request.getParameter("password"))
-                .build();
-    }
+//    private User getUser(HttpServletRequest request){
+//        return User.builder()
+//                .firstName(request.getParameter("firstName"))
+//                .lastName(request.getParameter("lastName"))
+//                .phone(request.getParameter("phone"))
+//                .password(request.getParameter("password"))
+//                .build();
+//    }
 }
