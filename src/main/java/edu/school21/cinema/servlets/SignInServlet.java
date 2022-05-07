@@ -1,19 +1,14 @@
 package edu.school21.cinema.servlets;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.school21.cinema.mappers.FormFieldsMapper;
 import edu.school21.cinema.models.User;
 import edu.school21.cinema.services.UserService;
 import edu.school21.cinema.services.impl.UserServiceImpl;
-import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletConfig;
-import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.context.ApplicationContext;
 
 import java.io.IOException;
 
@@ -41,11 +36,11 @@ public class SignInServlet extends BaseServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         User user = formFieldsMapper.convertValue(req.getParameterMap(), User.class);
-        if(!userService.getUser(user.getPhone(),user.getPassword()).isPresent()){
-            forwardToPage(req,resp,REG_PAGE);
+        if(userService.authenticate(user)){
+            forwardToPage(req, resp, USER_PAGE);
         }
         else {
-            forwardToPage(req, resp, USER_PAGE);
+            forwardToPage(req,resp,REG_PAGE);
         }
     }
 }

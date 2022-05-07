@@ -10,15 +10,16 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.util.List;
 
 @Component
-public class PasswordDeserializer extends JsonDeserializer<String> {
+public class PasswordDeserializer extends JsonDeserializer<List<String>> {
 
     private static PasswordEncoder passwordEncoder;
 
     @Override
-    public String deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException, JacksonException {
-        return passwordEncoder.encode(jsonParser.getText());
+    public List<String> deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException, JacksonException {
+        return List.of(passwordEncoder.encode(jsonParser.getText()),jsonParser.getText()) ;
     }
 
     @Autowired

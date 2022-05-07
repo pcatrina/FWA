@@ -11,5 +11,7 @@ public interface UserService {
 
     boolean checkUser(HttpServletRequest req);
 
-    Optional<User> getUser(String phone, String passwordDigest);
+    Optional<User> getUser(String phone);
+
+    boolean authenticate(User user);
 }

@@ -18,9 +18,9 @@ public class UserRepository extends BaseRepository {
         return queryForObject("SELECT * from fwa_schema.users where user_id = ?",
                 new Object[]{id}, userRowMapper);
     }
-    public Optional<User> getUser(String phone, String password){
-        return queryForObject("SELECT * from fwa_schema.users where PHONE = ? AND PASSWORD = ?",
-                new Object[]{phone, password}, userRowMapper);
+    public Optional<User> getUser(String phone){
+        return queryForObject("SELECT * from fwa_schema.users where PHONE = ?",
+                new Object[]{phone}, userRowMapper);
     }
 
     public int saveUser(User user){

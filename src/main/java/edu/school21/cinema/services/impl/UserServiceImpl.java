@@ -14,8 +14,8 @@ import java.util.Optional;
 @AllArgsConstructor
 public class UserServiceImpl implements UserService {
 
-
     private UserRepository userRepository;
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public void saveNewUser(User user) {
@@ -30,9 +30,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<User> getUser(String phone, String passwordDigest) {
-        return userRepository.getUser(phone, passwordDigest);
+    public Optional<User> getUser(String phone) {
+        return userRepository.getUser(phone);
     }
+
+    @Override
+    public boolean authenticate(User user) {
+        Optional<User> fromBase = userRepository.getUser(user.getPhone());
+        return fromBase.isPresent() &&
+                passwordEncoder.matches(user.getRawPassword(), fromBase.get().getPassword());
+    }
+
 
 //    private User getUser(HttpServletRequest request){
 //        return User.builder()
