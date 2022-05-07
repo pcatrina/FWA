@@ -28,7 +28,7 @@ public class SignInServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        RequestDispatcher requestDispatcher = req.getRequestDispatcher("WEB-INF/html/registration.html");
+        RequestDispatcher requestDispatcher = req.getRequestDispatcher("WEB-INF/html/authorization.html");
         requestDispatcher.forward(req, resp);
     }
 
