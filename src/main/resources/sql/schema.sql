@@ -4,6 +4,6 @@ CREATE TABLE IF NOT EXISTS fwa_schema.users (
     user_id serial PRIMARY KEY,
     first_name VARCHAR(255) NOT NULL,
     last_name VARCHAR(255) NOT NULL ,
-    phone VARCHAR(10) NOT NULL,
+    phone VARCHAR(10) NOT NULL UNIQUE ,
     password VARCHAR(255) NOT NULL
 );

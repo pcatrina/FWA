@@ -1,10 +1,14 @@
 package edu.school21.cinema.config;
 
+import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.module.SimpleModule;
+import edu.school21.cinema.mappers.PasswordDeserializer;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
@@ -43,12 +47,21 @@ public class ContextConfig {
 
 
     @Bean
-    public PasswordEncoder encoder() {
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
     @Bean
-    public ObjectMapper objectMapper(){
-        return new ObjectMapper();
+    public ObjectMapper objectMapper(PasswordDeserializer passwordDeserializer){
+//        Jackson2ObjectMapperBuilder builder = new Jackson2ObjectMapperBuilder();
+//        builder.deserializers(passwordDeserializer);
+//        return builder.build();
+////        return new ObjectMapper();
+
+//        SimpleModule module = new SimpleModule();
+//        module.addDeserializer(String.class, passwordDeserializer);
+        ObjectMapper mapper = new ObjectMapper();
+//        mapper.registerModule(module);
+        return mapper;
     }
 }

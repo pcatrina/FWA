@@ -14,7 +14,7 @@ import java.util.Optional;
 @AllArgsConstructor
 public class UserServiceImpl implements UserService {
 
-    private PasswordEncoder passwordEncoder;
+
     private UserRepository userRepository;
 
     @Override

@@ -1,5 +1,7 @@
 package edu.school21.cinema.models;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import edu.school21.cinema.mappers.PasswordDeserializer;
 import lombok.*;
 
 @Data
@@ -10,5 +12,6 @@ public class User {
     String firstName;
     String lastName;
     String phone;
+    @JsonDeserialize(using = PasswordDeserializer.class)
     String password;
 }
