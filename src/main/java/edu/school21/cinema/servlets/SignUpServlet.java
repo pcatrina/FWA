@@ -29,6 +29,7 @@ public class SignUpServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) {
-        userService.registerNewUser(request);
+//        userService.saveNewUser(request);
+        System.out.println();
     }
 }

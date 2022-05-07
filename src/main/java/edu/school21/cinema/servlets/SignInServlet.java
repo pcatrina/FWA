@@ -1,5 +1,6 @@
 package edu.school21.cinema.servlets;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.school21.cinema.services.UserService;
 import edu.school21.cinema.services.impl.UserServiceImpl;
 import jakarta.servlet.RequestDispatcher;
@@ -18,6 +19,7 @@ import java.io.IOException;
 public class SignInServlet extends HttpServlet {
 
     private UserService userService;
+    private ObjectMapper objectMapper;
 
     @Override
     public void init(ServletConfig config) throws ServletException {
@@ -39,7 +41,7 @@ public class SignInServlet extends HttpServlet {
             requestDispatcher.forward(req, resp);
         }
         else {
-            userService.registerNewUser(req);
+//            userService.saveNewUser(req);
         }
     }
 }

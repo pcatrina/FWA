@@ -4,11 +4,11 @@ import edu.school21.cinema.models.User;
 import edu.school21.cinema.repositories.UserRepository;
 import edu.school21.cinema.services.UserService;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -18,8 +18,8 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
 
     @Override
-    public void registerNewUser(HttpServletRequest request) {
-        User user =  getUser(request);
+    public void saveNewUser(User user) {
+//        User user =  getUser(user);
 
         System.out.println(user.toString());
     }
@@ -27,6 +27,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean checkUser(HttpServletRequest req) {
         return userRepository.isUserExist(getUser(req));
+    }
+
+    @Override
+    public Optional<User> getUser(String phone, String passwordDigest) {
+        return Optional.empty();
     }
 
     private User getUser(HttpServletRequest request){
