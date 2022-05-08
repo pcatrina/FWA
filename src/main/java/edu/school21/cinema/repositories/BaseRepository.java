@@ -1,7 +1,9 @@
 package edu.school21.cinema.repositories;
 
+import org.postgresql.util.PSQLException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -22,6 +24,15 @@ public class BaseRepository {
         }
         catch (EmptyResultDataAccessException e) {
             return Optional.empty();
+        }
+    }
+
+    public int update(String sql, Object... args) throws DataAccessException {
+        try{
+            return jdbcTemplate.update(sql, args);
+        }
+        catch (DuplicateKeyException e){
+            return 0;
         }
     }
 

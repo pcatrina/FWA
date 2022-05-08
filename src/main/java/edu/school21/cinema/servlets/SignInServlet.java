@@ -19,7 +19,7 @@ public class SignInServlet extends BaseServlet {
     private FormFieldsMapper formFieldsMapper;
     private static final String AUTH_PAGE = "WEB-INF/html/authorization.html";
     private static final String REG_PAGE = "WEB-INF/html/registration.html";
-    private static final String USER_PAGE = "WEB-INF/html/user_page.html";
+    private static final String USER_PAGE = "WEB-INF/html/profile_page.html";
 
     @Override
     public void init(ServletConfig config) throws ServletException {
@@ -40,7 +40,7 @@ public class SignInServlet extends BaseServlet {
             forwardToPage(req, resp, USER_PAGE);
         }
         else {
-            forwardToPage(req,resp,REG_PAGE);
+            forwardToPage(req, resp, AUTH_PAGE);
         }
     }
 }

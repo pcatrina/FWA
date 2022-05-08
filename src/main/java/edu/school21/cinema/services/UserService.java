@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public interface UserService {
 
-    void saveNewUser(User user);
+    int saveNewUser(User user);
 
     boolean checkUser(HttpServletRequest req);
 

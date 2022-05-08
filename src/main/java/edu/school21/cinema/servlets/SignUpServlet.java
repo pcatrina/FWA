@@ -34,7 +34,10 @@ public class SignUpServlet extends BaseServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         User user = formFieldsMapper.convertValue(request.getParameterMap(), User.class);
-        userService.saveNewUser(user);
-        forwardToPage(request, response, AUTH_PAGE);
+        int result = userService.saveNewUser(user);
+        if (result == 0)
+            forwardToPage(request, response, REG_PAGE);
+        else
+            forwardToPage(request, response, AUTH_PAGE);
     }
 }

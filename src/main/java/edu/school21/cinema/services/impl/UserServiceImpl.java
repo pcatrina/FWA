@@ -18,10 +18,9 @@ public class UserServiceImpl implements UserService {
     private PasswordEncoder passwordEncoder;
 
     @Override
-    public void saveNewUser(User user) {
-        userRepository.saveUser(user);
-
-        System.out.println(user.toString());
+    public int saveNewUser(User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        return userRepository.saveUser(user);
     }
 
     @Override
@@ -38,16 +37,6 @@ public class UserServiceImpl implements UserService {
     public boolean authenticate(User user) {
         Optional<User> fromBase = userRepository.getUser(user.getPhone());
         return fromBase.isPresent() &&
-                passwordEncoder.matches(user.getRawPassword(), fromBase.get().getPassword());
+                passwordEncoder.matches(user.getPassword(), fromBase.get().getPassword());
     }
-
-
-//    private User getUser(HttpServletRequest request){
-//        return User.builder()
-//                .firstName(request.getParameter("firstName"))
-//                .lastName(request.getParameter("lastName"))
-//                .phone(request.getParameter("phone"))
-//                .password(request.getParameter("password"))
-//                .build();
-//    }
 }

@@ -24,7 +24,8 @@ public class UserRepository extends BaseRepository {
     }
 
     public int saveUser(User user){
-        return jdbcTemplate.update("INSERT INTO fwa_schema.users(first_name, last_name, phone, password) VALUES (?, ?, ?, ?)",
+
+        return update("INSERT INTO fwa_schema.users(first_name, last_name, phone, password) VALUES (?, ?, ?, ?)",
                 user.getFirstName(), user.getLastName(), user.getPhone(), user.getPassword());
     }
 
