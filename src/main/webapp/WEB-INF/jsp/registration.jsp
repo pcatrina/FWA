@@ -1,30 +1,6 @@
-<html>
-<head>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <title>Sign In</title>
-    <style>
-        body {
-            background: #000000;
-            width: 100%;
-            height: 100%;
-        }
-    </style>
-</head>
-<body>
-<script src="${pageContext.request.contextPath}/static/js/particles.js"></script>
-<script type="text/javascript">
-    particlesJS.load('particles-js', '/static/assets/particles.json', function () {
-        console.log('callback - particles.js config loaded');
-    });
-</script>
-
-<div id="particles-js"></div>
-<div id="page-wrapper">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/prettycss/index.css">
-
-    <div class="container h-100">
-        <div class="row h-100 justify-content-center align-items-center">
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
+<t:template>
             <div class="container" style="width: 20vw">
                 <h1 class="text-center p-3" style="color: #eeeeea">Sign Up</h1>
                 <form action="${pageContext.request.contextPath}/signUp" method="POST">
@@ -67,13 +43,6 @@
                     <input type="submit" class="btn btn-primary" value="Sign Up">
                 </form>
                 <p class="text-danger text-center">${error}</p>
-                <%--    <br/>--%>
                 <a style="color: #eeeeea">Already have an account? </a>
                 <a href="/signIn" class="link-primary">SignIn</a>
-            </div>
-
-        </div>
-
-    </div>
-</body>
-</html>
+</t:template>
