@@ -17,9 +17,8 @@ public class SignInServlet extends BaseServlet {
 
     private UserService userService;
     private FormFieldsMapper formFieldsMapper;
-    private static final String AUTH_PAGE = "WEB-INF/html/authorization.html";
-    private static final String REG_PAGE = "WEB-INF/html/registration.html";
-    private static final String USER_PAGE = "WEB-INF/html/profile_page.html";
+    private static final String AUTH_PAGE = "WEB-INF/jsp/authorization.jsp";
+    private static final String USER_PAGE = "WEB-INF/jsp/profile_page.html";
 
     @Override
     public void init(ServletConfig config) throws ServletException {
@@ -30,17 +29,24 @@ public class SignInServlet extends BaseServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        forwardToPage(req,resp,AUTH_PAGE);
+        forwardToPage(req, resp, AUTH_PAGE);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         User user = formFieldsMapper.convertValue(req.getParameterMap(), User.class);
-        if(userService.authenticate(user)){
-            forwardToPage(req, resp, USER_PAGE);
-        }
-        else {
+        try {
+
+            if (userService.authenticate(user)) {
+                forwardToPage(req, resp, USER_PAGE);
+            } else {
+                req.setAttribute("error", "Wrong phone number or password");
+                forwardToPage(req, resp, AUTH_PAGE);
+            }
+        } catch (Exception e) {
+            req.setAttribute("error", "Something went wrong ...");
             forwardToPage(req, resp, AUTH_PAGE);
         }
+
     }
 }

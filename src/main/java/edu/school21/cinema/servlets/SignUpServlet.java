@@ -16,8 +16,8 @@ public class SignUpServlet extends BaseServlet {
 
     private UserService userService;
     private FormFieldsMapper formFieldsMapper;
-    private static final String REG_PAGE = "WEB-INF/html/registration.html";
-    private static final String AUTH_PAGE = "WEB-INF/html/authorization.html";
+    private static final String REG_PAGE = "WEB-INF/jsp/registration.jsp";
+    private static final String AUTH_PAGE = "WEB-INF/jsp/authorization.jsp";
 
     @Override
     public void init(ServletConfig config) throws ServletException {
@@ -33,11 +33,17 @@ public class SignUpServlet extends BaseServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        User user = formFieldsMapper.convertValue(request.getParameterMap(), User.class);
-        int result = userService.saveNewUser(user);
-        if (result == 0)
+        try {
+            User user = formFieldsMapper.convertValue(request.getParameterMap(), User.class);
+            int result = userService.saveNewUser(user);
+            if (result == 0) {
+                request.setAttribute("error", "This phone number have already been registered");
+                forwardToPage(request, response, REG_PAGE);
+            } else
+                forwardToPage(request, response, AUTH_PAGE);
+        } catch (Exception e) {
+            request.setAttribute("error", "Something went wrong ...");
             forwardToPage(request, response, REG_PAGE);
-        else
-            forwardToPage(request, response, AUTH_PAGE);
+        }
     }
 }
