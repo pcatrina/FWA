@@ -13,5 +13,5 @@ public interface UserService {
 
     Optional<User> getUser(String phone);
 
-    boolean authenticate(User user);
+    Optional<User> authenticate(User user);
 }

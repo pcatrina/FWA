@@ -34,9 +34,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean authenticate(User user) {
+    public Optional<User> authenticate(User user) {
         Optional<User> fromBase = userRepository.getUser(user.getPhone());
-        return fromBase.isPresent() &&
-                passwordEncoder.matches(user.getPassword(), fromBase.get().getPassword());
+        return (fromBase.isPresent() &&
+                passwordEncoder.matches(user.getPassword(), fromBase.get().getPassword())) ?
+             fromBase : Optional.empty();
     }
 }

@@ -4,13 +4,16 @@ import edu.school21.cinema.mappers.FormFieldsMapper;
 import edu.school21.cinema.models.User;
 import edu.school21.cinema.services.UserService;
 import edu.school21.cinema.services.impl.UserServiceImpl;
+import edu.school21.cinema.utils.AppUtils;
 import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+import javax.crypto.spec.OAEPParameterSpec;
 import java.io.IOException;
+import java.util.Optional;
 
 @WebServlet(name = "SignInServlet", value = "/signIn")
 public class SignInServlet extends BaseServlet {
@@ -34,11 +37,12 @@ public class SignInServlet extends BaseServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        User user = formFieldsMapper.convertValue(req.getParameterMap(), User.class);
         try {
-
-            if (userService.authenticate(user)) {
-                forwardToPage(req, resp, USER_PAGE);
+            User user = formFieldsMapper.convertValue(req.getParameterMap(), User.class);
+            Optional<User> authenticatedUser = userService.authenticate(user);
+            if (authenticatedUser.isPresent()) {
+                AppUtils.storeLoginedUser(req.getSession(), authenticatedUser.get());
+                resp.sendRedirect(req.getContextPath() + "/profile");
             } else {
                 req.setAttribute("error", "Wrong phone number or password");
                 forwardToPage(req, resp, AUTH_PAGE);
