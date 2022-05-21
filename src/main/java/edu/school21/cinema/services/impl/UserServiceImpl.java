@@ -20,7 +20,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public int saveNewUser(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        return userRepository.saveUser(user);
+//        return userRepository.saveUser(user);
+        return userRepository.save(user);
     }
 
     @Override
@@ -30,12 +31,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Optional<User> getUser(String phone) {
-        return userRepository.getUser(phone);
+        return userRepository.getByField("phone", phone);
     }
 
     @Override
     public Optional<User> authenticate(User user) {
-        Optional<User> fromBase = userRepository.getUser(user.getPhone());
+        Optional<User> fromBase = userRepository.getByField("phone", user.getPhone());
         return (fromBase.isPresent() &&
                 passwordEncoder.matches(user.getPassword(), fromBase.get().getPassword())) ?
              fromBase : Optional.empty();

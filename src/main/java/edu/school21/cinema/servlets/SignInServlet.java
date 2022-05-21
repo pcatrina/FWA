@@ -48,6 +48,7 @@ public class SignInServlet extends BaseServlet {
                 forwardToPage(req, resp, AUTH_PAGE);
             }
         } catch (Exception e) {
+            e.printStackTrace();
             req.setAttribute("error", "Something went wrong ...");
             forwardToPage(req, resp, AUTH_PAGE);
         }

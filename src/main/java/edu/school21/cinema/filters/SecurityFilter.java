@@ -22,14 +22,16 @@ public class SecurityFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws ServletException, IOException {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
+        chain.doFilter(req, res); // TODO отключено для удобной верстки
 
-        if (AppUtils.getLoginedUser(req.getSession()) != null) {
-            chain.doFilter(req, res);
-        } else {
-            res.setStatus(HttpServletResponse.SC_FORBIDDEN);
-//            res.setContentType(MimeTypeUtils.TEXT_HTML_VALUE);
-//            IOUtils.copy(new FileReader("src/main/webapp/WEB-INF/html/Forbidden.html"), res.getWriter());
-            req.getRequestDispatcher(FORBIDDEN_PAGE).forward(req, res);
-        }
+
+//        if (AppUtils.getLoginedUser(req.getSession()) != null) {
+//            chain.doFilter(req, res);
+//        } else {
+//            res.setStatus(HttpServletResponse.SC_FORBIDDEN);
+////            res.setContentType(MimeTypeUtils.TEXT_HTML_VALUE);
+////            IOUtils.copy(new FileReader("src/main/webapp/WEB-INF/html/Forbidden.html"), res.getWriter());
+//            req.getRequestDispatcher(FORBIDDEN_PAGE).forward(req, res);
+//        }
     }
 }
