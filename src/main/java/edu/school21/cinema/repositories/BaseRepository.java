@@ -16,12 +16,15 @@ import org.springframework.dao.DuplicateKeyException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
 import java.lang.reflect.Field;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Repository
 public abstract class BaseRepository<T extends Entity> {
@@ -84,20 +87,48 @@ public abstract class BaseRepository<T extends Entity> {
     }
 
     public int save(T entity){
-        Map<String, Object> values = getValuesMap(entity, true); //TODO дописать вариант не игнорить id
+        Map<String, Object> values = getValuesMap(entity, true, false); //TODO дописать вариант не игнорить id
         String insertString = getInsertString(values);
         return update(insertString, values.values().toArray());
     }
 
+    public int update(T entity){
+        Map<String, Object> values = getValuesMap(entity, false, true);
+        Object id = values.get(getIdField());
+        if (id == null)
+            throw new IllegalStateException("Primary Key is empty");
+        values.remove(getIdField());
+        if (values.size() ==0)
+            return 0;
+        String updateString = getUpdateString(values);
+        Object[] args = new Object[values.size() + 1];
+        Iterator<Object> it = values.values().iterator();
+        for (int i = 0; i < values.size(); i++)
+            args[i] = it.next();
+        args[values.size()] = id;
+        return update(updateString, args);
+    }
+
+    public Object saveAndReturnKey(T entity){
+        SimpleJdbcInsert insert = new SimpleJdbcInsert(jdbcTemplate);
+        insert.withSchemaName(schema);
+        insert.withTableName(getTableName());
+        insert.usingGeneratedKeyColumns(getIdField());
+        Map<String, Object> values = getValuesMap(entity, true, false);
+        return insert.executeAndReturnKey(values);
+    }
+
     @SneakyThrows
-    private Map<String, Object> getValuesMap(T entity, boolean ignoreId){
+    private Map<String, Object> getValuesMap(T entity, boolean ignoreId, boolean ignoreNull){
         Map<String, Object> res = new LinkedHashMap<>();
         for (Field field : entity.getClass().getDeclaredFields()) {
             if (field.isAnnotationPresent(Id.class) && ignoreId)
                 continue;
             String name = EntityUtils.getColumnName(field);
             field.setAccessible(true);
-            res.put(name, field.get(entity));
+            Object value = field.get(entity);
+            if (!(value == null && ignoreNull))
+                res.put(name, value);
         }
         return res;
     }
@@ -107,6 +138,14 @@ public abstract class BaseRepository<T extends Entity> {
         String colNames = String.join(", ", valuesMap.keySet());
         String values = String.join(", ", AppUtils.getNTimes("?", valuesMap.keySet().size()));
         return String.format(format, schema, getTableName(), colNames, values);
+    }
+
+    private String getUpdateString(Map<String, Object> valuesMap){
+        String format = "UPDATE %s.%s SET %s WHERE %s=?";
+        String colNames = valuesMap.keySet().stream()
+                .map(el->el + "=?")
+                .collect(Collectors.joining(", "));
+        return String.format(format, schema, getTableName(), colNames, getIdField());
     }
 
     private void setIdField(Class<T> entityClass){

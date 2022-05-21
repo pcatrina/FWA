@@ -1,5 +1,6 @@
 package edu.school21.cinema.filters;
 
+import edu.school21.cinema.exceptions.RequestProcessingException;
 import edu.school21.cinema.models.User;
 import edu.school21.cinema.utils.AppUtils;
 import jakarta.servlet.*;
@@ -9,9 +10,8 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-@WebFilter(filterName = "SecurityFilter", urlPatterns = {"/profile", "/images"})
+@WebFilter(filterName = "SecurityFilter", urlPatterns = {"/profile/*",  "/images/*"})
 public class SecurityFilter implements Filter {
-    private static final String FORBIDDEN_PAGE = "WEB-INF/jsp/errors/forbidden.jsp";
     public void init(FilterConfig config) throws ServletException {
     }
 
@@ -22,16 +22,10 @@ public class SecurityFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws ServletException, IOException {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
-        chain.doFilter(req, res); // TODO отключено для удобной верстки
 
-
-//        if (AppUtils.getLoginedUser(req.getSession()) != null) {
-//            chain.doFilter(req, res);
-//        } else {
-//            res.setStatus(HttpServletResponse.SC_FORBIDDEN);
-////            res.setContentType(MimeTypeUtils.TEXT_HTML_VALUE);
-////            IOUtils.copy(new FileReader("src/main/webapp/WEB-INF/html/Forbidden.html"), res.getWriter());
-//            req.getRequestDispatcher(FORBIDDEN_PAGE).forward(req, res);
-//        }
+        if (AppUtils.getLoginedUser(req.getSession()) != null)
+            chain.doFilter(req, res);
+        else
+            throw new RequestProcessingException("Unauthorized", 403);
     }
 }

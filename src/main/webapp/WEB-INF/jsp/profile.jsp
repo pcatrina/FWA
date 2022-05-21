@@ -33,11 +33,12 @@
 
                     <form class="" action="${pageContext.request.contextPath}/images" method="POST"
                           enctype="multipart/form-data">
-                        <input id="inputFile" style="display: none" type="file" name="fileToUpload"
+                        <input id="inputFile" style="display: none" type="file" name="uploadedImage"
                                onchange="inputImage(event)" accept="image/*">
                         <button id="uploadbtn" class="btn btn-secondary mt-2" type="submit" disabled>Upload</button>
                             <%--                        <input  type="submit" class="btn btn-primary" value="Upload" disabled>--%>
                     </form>
+                    <p class="text-danger text-center">${upload_error}</p>
                 </div>
                 <div class="col-8">
                     <p> Hello, i'm ......</p>

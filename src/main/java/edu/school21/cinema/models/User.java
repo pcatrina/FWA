@@ -8,12 +8,13 @@ import lombok.*;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @NoArgsConstructor
-@AllArgsConstructor
 @Table(name = "users")
 public class User extends Entity{
     @Id
     @Column(name = "user_id")
     Long id;
+    @Column(name = "image_id")
+    Long imageId;
     @Column(name = "first_name")
     String firstName;
     @Column(name = "last_name")

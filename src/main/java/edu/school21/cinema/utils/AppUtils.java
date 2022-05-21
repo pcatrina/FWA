@@ -1,5 +1,6 @@
 package edu.school21.cinema.utils;
 
+import edu.school21.cinema.exceptions.RequestProcessingException;
 import edu.school21.cinema.models.User;
 import jakarta.servlet.http.HttpSession;
 
