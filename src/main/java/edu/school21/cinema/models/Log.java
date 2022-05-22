@@ -3,6 +3,7 @@ package edu.school21.cinema.models;
 import edu.school21.cinema.annotations.Column;
 import edu.school21.cinema.annotations.Id;
 import edu.school21.cinema.annotations.Table;
+import edu.school21.cinema.annotations.Transient;
 import lombok.*;
 
 import java.text.DateFormat;
@@ -17,8 +18,8 @@ import java.util.Date;
 @AllArgsConstructor
 public class Log extends Entity{
 
-    private static String datePattern = "MM/dd/yyyy";
-    private static String timePattern = "\"h:mm a\"";
+    private static DateFormat datePattern = new  SimpleDateFormat("MM/dd/yyyy");
+    private static DateFormat timePattern = new  SimpleDateFormat("\"h:mm a\"") ;
 
     @Id
     @Column(name = "object_id")
@@ -28,13 +29,11 @@ public class Log extends Entity{
     Date date;
     String ip;
 
-    String getDataFormat(){
-        DateFormat df = new SimpleDateFormat(datePattern);
-        return df.format(date);
+    public String getDateFormat(){
+        return datePattern.format(date);
     }
 
-    String getTimeFormat(){
-        DateFormat df = new SimpleDateFormat(timePattern);
-        return df.format(date);
+    public String getTimeFormat(){
+        return timePattern.format(date);
     }
 }

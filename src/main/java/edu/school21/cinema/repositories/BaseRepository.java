@@ -3,6 +3,7 @@ package edu.school21.cinema.repositories;
 import edu.school21.cinema.annotations.Column;
 import edu.school21.cinema.annotations.Id;
 import edu.school21.cinema.annotations.Table;
+import edu.school21.cinema.annotations.Transient;
 import edu.school21.cinema.mappers.SimpleRowMapper;
 import edu.school21.cinema.models.Entity;
 import edu.school21.cinema.utils.AppUtils;
@@ -133,7 +134,9 @@ public abstract class BaseRepository<T extends Entity> {
     private Map<String, Object> getValuesMap(T entity, boolean ignoreId, boolean ignoreNull){
         Map<String, Object> res = new LinkedHashMap<>();
         for (Field field : entity.getClass().getDeclaredFields()) {
-            if (field.isAnnotationPresent(Id.class) && ignoreId)
+            if (field.isAnnotationPresent(Id.class) && ignoreId ||
+                    field.isAnnotationPresent(Transient.class) ||
+                    java.lang.reflect.Modifier.isStatic(field.getModifiers()))
                 continue;
             String name = EntityUtils.getColumnName(field);
             field.setAccessible(true);

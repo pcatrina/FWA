@@ -26,4 +26,4 @@ CREATE TABLE IF NOT EXISTS fwa_schema.connection_logs
     user_id     BIGINT REFERENCES fwa_schema.users (user_id),
     date        TIMESTAMP NOT NULL,
     ip          VARCHAR(15) NOT NULL
-)
+);

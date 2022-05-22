@@ -1,5 +1,6 @@
 package edu.school21.cinema.mappers;
 
+import edu.school21.cinema.annotations.Transient;
 import edu.school21.cinema.models.Entity;
 import edu.school21.cinema.utils.EntityUtils;
 import lombok.SneakyThrows;
@@ -40,6 +41,10 @@ public class SimpleRowMapper<T extends Entity> implements RowMapper<T> {
             throw new IllegalStateException("Entity object must have public default constructor to create an instance");
         }
         for (Field field : entity.getClass().getDeclaredFields()) {
+
+            if (field.isAnnotationPresent(Transient.class) ||
+                    java.lang.reflect.Modifier.isStatic(field.getModifiers()))
+                continue;
             field.setAccessible(true);
             field.set(entity, methodMapping.get(field.getType()).invoke(resultSet, EntityUtils.getColumnName(field)));
         }

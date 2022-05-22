@@ -14,34 +14,19 @@
         function inputImage(event) {
             if (event.target.files[0]) {
                 document.getElementById('image').src = URL.createObjectURL(event.target.files[0]);
-                // document.getElementById("add-icon").style.display = "none";
                 document.getElementById("uploadbtn").disabled = false;
             }
         }
     </script>
 
 
-
-<%--  <%=List<Image> userImages = (List<Image>) request.getAttribute("userImages");%>--%>
-
-<%--        User user = (User) request.getAttribute("loginedUser");--%>
-
-
-<%--    <c:if test="${loginedUser.getImageId != null}">--%>
-<%--        <c:set var = "userImage"--%>
-<%--                value= "/images/${loginedUser.getImageId()}"--%>
-<%--               scope = "session"--%>
-<%--        />--%>
-<%--    </c:if>--%>
-
-
-    <div class="card special-card">
+    <div class="card special-card mt-5">
         <div class="card-body g-2">
             <div class="row">
                 <div class="col-4 text-center">
 
                     <img id="image" onclick="triggerInput()"
-                         src= "${loginedUser.getImageId()==null? "/static/assets/images/placeholder.png" : "/images/".concat(loginedUser.getImageId().toString())}"  class="img-fluid"
+                         src= "${loginedUser.getImageId()==0? "/static/assets/images/placeholder.png" : "/images/".concat(loginedUser.getImageId().toString())}"  class="img-fluid"
                          alt="placeholder">
 
                     <form class="" action="${pageContext.request.contextPath}/images" method="POST"
@@ -49,26 +34,25 @@
                         <input id="inputFile" style="display: none" type="file" name="uploadedImage"
                                onchange="inputImage(event)" accept="image/*">
                         <button id="uploadbtn" class="btn btn-secondary mt-2" type="submit" disabled>Upload</button>
-                            <%--                        <input  type="submit" class="btn btn-primary" value="Upload" disabled>--%>
                     </form>
                     <p class="text-danger text-center">${upload_error}</p>
                 </div>
                 <div class="col-8">
                     <p> Hello, i'm ${loginedUser.getFirstName()} ${loginedUser.getLastName()}</p>
                     <div class="fwa-list">
-                        <table>
+                        <table class="fwa-table">
                             <tr>
-                                <th>Date</th>
-                                <th>Time</th>
-                                <th>IP</th>
+                                <th class="table-header">Date</th>
+                                <th class="table-header">Time</th>
+                                <th class="table-header">IP</th>
                             </tr>
-                                <%--                <c:forEach var="s" items="<%= userSessions %>">--%>
-                                <%--                    <tr>--%>
-                                <%--                        <td>${s.date}</td>--%>
-                                <%--                        <td>${s.time}</td>--%>
-                                <%--                        <td>${s.ip}</td>--%>
-                                <%--                    </tr>--%>
-                                <%--                </c:forEach>--%>
+                                <c:forEach var="log" items="${userLogs}">
+                                    <tr>
+                                        <td class="table-el">${log.getDateFormat()}</td>
+                                        <td class="table-el">${log.getTimeFormat()}</td>
+                                        <td class="table-el">${log.getIp()}</td>
+                                    </tr>
+                                </c:forEach>
                         </table>
                     </div>
                 </div>
@@ -76,19 +60,19 @@
             <div class="row">
                 <div class="col-12">
                     <div class="fwa-list">
-                        <table>
+                        <table class="fwa-table">
                             <tr>
-                                <th>File name</th>
-                                <th>Size</th>
-                                <th>MIME</th>
+                                <th class="table-header">File name</th>
+                                <th class="table-header">Size</th>
+                                <th class="table-header">MIME</th>
                             </tr>
                                 <c:forEach  items="${userImages}" var="img">
                                     <tr>
-                                        <td>
+                                        <td class="table-el">
                                             <a href="/images/${img.getId()}">${img.getFilename()}</a>
                                         </td>
-                                        <td> <c:out value ="${img.size}"/></td>
-                                        <td> <c:out value ="${img.mime}"/></td>
+                                        <td class="table-el"> <c:out value ="${img.size}"/></td>
+                                        <td class="table-el"> <c:out value ="${img.mime}"/></td>
                                     </tr>
                                 </c:forEach>
                         </table>

@@ -86,16 +86,20 @@
     flex-direction: column;
 }
 
-table {
+.fwa-table{
     font-size: 10pt;
     border-collapse: collapse;
 }
 
-td, th {
+.table-el{
     border: 1px solid #dddddd;
     text-align: center;
     padding: 4px;
 }
-th {
+
+.table-header{
+    border: 1px solid #dddddd;
+    text-align: center;
+    padding: 4px;
     background-color: #dddddd;
 }
