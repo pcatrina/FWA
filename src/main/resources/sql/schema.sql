@@ -19,3 +19,11 @@ CREATE TABLE IF NOT EXISTS fwa_schema.images
     mime      VARCHAR(20)   NOT NULL,
     date      TIMESTAMP    NOT NULL
 );
+
+CREATE TABLE IF NOT EXISTS fwa_schema.connection_logs
+(
+    object_id   serial PRIMARY KEY,
+    user_id     BIGINT REFERENCES fwa_schema.users (user_id),
+    date        TIMESTAMP NOT NULL,
+    ip          VARCHAR(15) NOT NULL
+)
