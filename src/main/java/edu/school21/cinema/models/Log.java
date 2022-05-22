@@ -3,7 +3,6 @@ package edu.school21.cinema.models;
 import edu.school21.cinema.annotations.Column;
 import edu.school21.cinema.annotations.Id;
 import edu.school21.cinema.annotations.Table;
-import edu.school21.cinema.annotations.Transient;
 import lombok.*;
 
 import java.text.DateFormat;
@@ -18,8 +17,8 @@ import java.util.Date;
 @AllArgsConstructor
 public class Log extends Entity{
 
-    private static DateFormat datePattern = new  SimpleDateFormat("MM/dd/yyyy");
-    private static DateFormat timePattern = new  SimpleDateFormat("\"h:mm a\"") ;
+    private static DateFormat datePattern = new  SimpleDateFormat("MMM, dd, yyyy");
+    private static DateFormat timePattern = new  SimpleDateFormat("hh:mm") ;
 
     @Id
     @Column(name = "object_id")
