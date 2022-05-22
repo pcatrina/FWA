@@ -25,6 +25,7 @@ public class SignInServlet extends BaseServlet {
     private LogService logService;
     private static final String AUTH_PAGE = "WEB-INF/jsp/authorization.jsp";
     private static final String USER_PAGE = "WEB-INF/jsp/profile_page.html";
+    private static final String UNDESIRED_ADDRES= "0:0:0:0:0:0:0:1";
 
     @Override
     public void init(ServletConfig config) throws ServletException {
@@ -45,7 +46,7 @@ public class SignInServlet extends BaseServlet {
             User user = formFieldsMapper.convertValue(req.getParameterMap(), User.class);
             Optional<User> authenticatedUser = userService.authenticate(user);
             if (authenticatedUser.isPresent()) {
-                logService.createNewLogForUser(authenticatedUser.get(), req.getRemoteAddr());
+                logService.createNewLogForUser(authenticatedUser.get(), getIp(req));
                 AppUtils.storeLoginedUser(req.getSession(), authenticatedUser.get());
                 resp.sendRedirect(req.getContextPath() + "/profile");
             } else {
@@ -58,5 +59,12 @@ public class SignInServlet extends BaseServlet {
             forwardToPage(req, resp, AUTH_PAGE);
         }
 
+    }
+
+    private String getIp(HttpServletRequest request){
+        String addr = request.getRemoteAddr();
+        if (addr.equals(UNDESIRED_ADDRES))
+            return "127.0.0.1";
+        return addr;
     }
 }
