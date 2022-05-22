@@ -13,8 +13,7 @@ public class AppUtils {
 
 
     public static User getLoginedUser(HttpSession session) {
-        User loginedUser = (User) session.getAttribute("loginedUser");
-        return loginedUser;
+        return (User) session.getAttribute("loginedUser");
     }
 
     public static String camelCaseToSnake(String value){

@@ -16,6 +16,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class ImagesServiceImpl implements ImagesService {
@@ -37,6 +38,7 @@ public class ImagesServiceImpl implements ImagesService {
         updated.setId(user.getId());
         updated.setImageId(Long.valueOf(uploadedId));
         userRepository.update(updated);
+        user.setImageId(Long.valueOf(uploadedId));
 
         try (FileOutputStream fos = new FileOutputStream(imageStoreDir.getPath() + File.separator + uploadedId.toString())) {
             payload.getInputStream().transferTo(fos);
@@ -49,6 +51,11 @@ public class ImagesServiceImpl implements ImagesService {
     @Override
     public Image getImage(Long id){
         return imagesRepository.getById(id).orElseThrow(() -> new RequestProcessingException("Image not found", 404));
+    }
+
+    @Override
+    public List<Image> getUserImages(User user){
+        return imagesRepository.getListByField("user_id", user.getId());
     }
 
     // TODO сделать отдельный сервис для работы с файлами

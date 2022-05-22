@@ -20,10 +20,7 @@ import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
 import java.lang.reflect.Field;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Repository
@@ -35,7 +32,8 @@ public abstract class BaseRepository<T extends Entity> {
     protected JdbcTemplate jdbcTemplate;
     private String idField;
     private String tableName;
-    private RowMapper<T> rowMapper;
+    private final RowMapper<T> rowMapper;
+    private Class<T> entityClass;
     protected  String getTableName(){
         if (tableName == null)
             throw new IllegalStateException("Entity class must be annotated with @Table or repository must override getTableName method");
@@ -55,6 +53,7 @@ public abstract class BaseRepository<T extends Entity> {
     public BaseRepository() {
         Class<T> entityClass = (Class<T>) ReflectionUtils.getGenericParameterClass(this.getClass(),0);
         this.rowMapper = SimpleRowMapper.of(entityClass);
+        this.entityClass = entityClass;
         setTableName(entityClass);
         setIdField(entityClass);
     }
@@ -84,6 +83,18 @@ public abstract class BaseRepository<T extends Entity> {
     public Optional<T> getByField(String field, Object value){
         return queryForObject(String.format("SELECT * FROM %s.%s WHERE %s = ?" , schema, getTableName(), field),
                 new Object[]{value}, getRowMapper());
+    }
+
+    public List<T> getListByField(String field, Object value){
+        String format = "SELECT * FROM %s.%s WHERE %s = %s";
+        return jdbcTemplate.query(String.format(format, schema, getTableName(), field, getStringValue(value)), getRowMapper());
+
+    }
+
+    private String getStringValue(Object obj){
+        if (obj instanceof String)
+            return "'" + obj.toString() + "'";
+        return obj.toString();
     }
 
     public int save(T entity){

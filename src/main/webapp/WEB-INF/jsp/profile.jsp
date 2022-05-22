@@ -69,13 +69,16 @@
                                 <th>Size</th>
                                 <th>MIME</th>
                             </tr>
-                                <%--                <c:forEach var="f" items="<%= imageFiles %>">--%>
-                                <%--                    <tr>--%>
-                                <%--                        <td><a href="/cinema/images/${f.uuid.toString()}">${f.name}</a></td>--%>
-                                <%--                        <td>${f.size}</td>--%>
-                                <%--                        <td>${f.mime}</td>--%>
-                                <%--                    </tr>--%>
-                                <%--                </c:forEach>--%>
+<%--                            <% Object userImages = request.getAttribute("userImages"); %>--%>
+                                <c:forEach items="${userImages}" var="img" >
+                                    <tr>
+                                        <td>
+                                            <a href="/images/${img.id}">${img.fileName}</a>
+                                        </td>
+                                        <td>${img.size}</td>
+                                        <td>${img.mime}</td>
+                                    </tr>
+                                </c:forEach>
                         </table>
                     </div>
                 </div>

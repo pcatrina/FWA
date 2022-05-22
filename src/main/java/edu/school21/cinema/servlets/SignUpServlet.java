@@ -42,6 +42,7 @@ public class SignUpServlet extends BaseServlet {
             } else
                 forwardToPage(request, response, AUTH_PAGE);
         } catch (Exception e) {
+            e.printStackTrace();
             request.setAttribute("error", "Something went wrong ...");
             forwardToPage(request, response, REG_PAGE);
         }
