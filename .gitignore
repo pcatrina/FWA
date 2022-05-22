@@ -1,4 +1,7 @@
 .idea
 target
-tomcat
+tools
+docker
+imagestore
+!tools/.keep
 *.swp

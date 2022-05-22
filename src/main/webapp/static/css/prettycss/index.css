@@ -1,0 +1,105 @@
+#particles-js-error { position: absolute; width: 100%; height: 100%; background-color: rgb(12, 12, 12); background-image: url(""); background-repeat: no-repeat; background-size: cover; background-position: 50% 50%; z-index: -100; }
+#particles-js { position: absolute; width: 100%; height: 100%; background-color: rgb(12, 12, 12); background-image: url(""); background-repeat: no-repeat; background-size: cover; background-position: 50% 50%; z-index: -100; }
+.special-card {
+    background-color: rgba(245, 245, 245, 0.95);
+}
+
+
+.avatar-user-info {
+    width: 100%;
+    display: flex;
+    justify-content: left;
+}
+.avatar-info {
+    display: flex;
+    flex-direction: column;
+}
+.user-info {
+    font-size: 13pt;
+    margin-top: 50px;
+    margin-left: 30px;
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;
+    scrollbar-width: thin;
+}
+.upload-form {
+    width: 198px;
+}
+/*.uploadbtn {*/
+/*    background-color: #5237d5;*/
+/*    color: white;*/
+/*    padding: 7px 20px;*/
+/*    margin: 8px 0;*/
+/*    border: none;*/
+/*    cursor: pointer;*/
+/*    height: 30px;*/
+/*    width: 200px;*/
+/*    opacity: 0.9;*/
+/*}*/
+/*.uploadbtn:hover {*/
+/*    opacity:1;*/
+/*    cursor: pointer;*/
+/*}*/
+.image-preview {
+    height:175px;
+    width: 194px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px dashed #5237d5;
+    border-radius: 10px;
+}
+.image {
+    max-width: 194px;
+    max-height: 175px;
+    border-radius: inherit;
+}
+.add-icon {
+    font-size: 40pt;
+    color: #5237d5;
+}
+.add-icon:hover {
+    font-size: 60pt;
+}
+.info-key {
+    margin-right: 10px;
+    min-width: 100px;
+}
+.label {
+    color: #a4a4a4;
+    margin: 2px;
+    font-size: 13pt;
+}
+.table-label {
+    color: #5237d5;
+    margin: 2px;
+    font-size: 13pt;
+    text-align: left;
+}
+.value {
+    margin: 2px;
+}
+.fwa-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.fwa-table{
+    font-size: 10pt;
+    border-collapse: collapse;
+}
+
+.table-el{
+    border: 1px solid #dddddd;
+    text-align: center;
+    padding: 4px;
+}
+
+.table-header{
+    border: 1px solid #dddddd;
+    text-align: center;
+    padding: 4px;
+    background-color: #dddddd;
+}
