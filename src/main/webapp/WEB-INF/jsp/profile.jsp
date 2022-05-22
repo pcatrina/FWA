@@ -1,5 +1,9 @@
-<%@page contentType="text/html" pageEncoding="UTF-8" %>
+<%@ page import="edu.school21.cinema.models.Image" %>
+<%@ page import="edu.school21.cinema.models.User" %>
+<%@ page import="java.util.List" %>
+<%@page contentType="text/html" pageEncoding="UTF-8" language="java" %>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <t:template>
 
     <script>
@@ -17,9 +21,18 @@
     </script>
 
 
-    <%--    <div class="card-body">--%>
-    <%--        <h1 class="text-center p-3" style="color: #eeeeea">Profile</h1>--%>
-    <%--    </div>--%>
+
+<%--  <%=List<Image> userImages = (List<Image>) request.getAttribute("userImages");%>--%>
+
+<%--        User user = (User) request.getAttribute("loginedUser");--%>
+
+
+<%--    <c:if test="${loginedUser.getImageId != null}">--%>
+<%--        <c:set var = "userImage"--%>
+<%--                value= "/images/${loginedUser.getImageId()}"--%>
+<%--               scope = "session"--%>
+<%--        />--%>
+<%--    </c:if>--%>
 
 
     <div class="card special-card">
@@ -28,7 +41,7 @@
                 <div class="col-4 text-center">
 
                     <img id="image" onclick="triggerInput()"
-                         src="${pageContext.request.contextPath}/static/assets/images/placeholder.png" class="img-fluid"
+                         src= "${loginedUser.getImageId()==null? "/static/assets/images/placeholder.png" : "/images/".concat(loginedUser.getImageId().toString())}"  class="img-fluid"
                          alt="placeholder">
 
                     <form class="" action="${pageContext.request.contextPath}/images" method="POST"
@@ -41,7 +54,7 @@
                     <p class="text-danger text-center">${upload_error}</p>
                 </div>
                 <div class="col-8">
-                    <p> Hello, i'm ......</p>
+                    <p> Hello, i'm ${loginedUser.getFirstName()} ${loginedUser.getLastName()}</p>
                     <div class="fwa-list">
                         <table>
                             <tr>
@@ -69,14 +82,13 @@
                                 <th>Size</th>
                                 <th>MIME</th>
                             </tr>
-<%--                            <% Object userImages = request.getAttribute("userImages"); %>--%>
-                                <c:forEach items="${userImages}" var="img" >
+                                <c:forEach  items="${userImages}" var="img">
                                     <tr>
                                         <td>
-                                            <a href="/images/${img.id}">${img.fileName}</a>
+                                            <a href="/images/${img.getId()}">${img.getFilename()}</a>
                                         </td>
-                                        <td>${img.size}</td>
-                                        <td>${img.mime}</td>
+                                        <td> <c:out value ="${img.size}"/></td>
+                                        <td> <c:out value ="${img.mime}"/></td>
                                     </tr>
                                 </c:forEach>
                         </table>
