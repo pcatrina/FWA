@@ -18,7 +18,7 @@ import java.util.Date;
 public class Log extends Entity{
 
     private static DateFormat datePattern = new  SimpleDateFormat("MMM, dd, yyyy");
-    private static DateFormat timePattern = new  SimpleDateFormat("hh:mm") ;
+    private static DateFormat timePattern = new  SimpleDateFormat("HH:mm") ;
 
     @Id
     @Column(name = "object_id")
