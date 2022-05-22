@@ -1,7 +1,9 @@
 package edu.school21.cinema.servlets;
 
 import edu.school21.cinema.mappers.FormFieldsMapper;
+import edu.school21.cinema.models.Log;
 import edu.school21.cinema.models.User;
+import edu.school21.cinema.services.LogService;
 import edu.school21.cinema.services.UserService;
 import edu.school21.cinema.services.impl.UserServiceImpl;
 import edu.school21.cinema.utils.AppUtils;
@@ -20,6 +22,7 @@ public class SignInServlet extends BaseServlet {
 
     private UserService userService;
     private FormFieldsMapper formFieldsMapper;
+    private LogService logService;
     private static final String AUTH_PAGE = "WEB-INF/jsp/authorization.jsp";
     private static final String USER_PAGE = "WEB-INF/jsp/profile_page.html";
 
@@ -28,6 +31,7 @@ public class SignInServlet extends BaseServlet {
         initSpringContext(config);
         this.userService = springContext.getBean(UserServiceImpl.class);
         this.formFieldsMapper = springContext.getBean(FormFieldsMapper.class);
+        this.logService = springContext.getBean(LogService.class);
     }
 
     @Override
@@ -41,6 +45,7 @@ public class SignInServlet extends BaseServlet {
             User user = formFieldsMapper.convertValue(req.getParameterMap(), User.class);
             Optional<User> authenticatedUser = userService.authenticate(user);
             if (authenticatedUser.isPresent()) {
+                logService.createNewLogForUser(authenticatedUser.get(), req.getRemoteAddr());
                 AppUtils.storeLoginedUser(req.getSession(), authenticatedUser.get());
                 resp.sendRedirect(req.getContextPath() + "/profile");
             } else {
