@@ -59,8 +59,8 @@ public class SimpleRowMapper<T extends Entity> implements RowMapper<T> {
         methodMapping = new HashMap<>();
         methodMapping.put(Long.class, ResultSet.class.getDeclaredMethod("getLong", String.class));
         methodMapping.put(String.class, ResultSet.class.getDeclaredMethod("getString", String.class));
-        methodMapping.put(Date.class, ResultSet.class.getDeclaredMethod("getDate", String.class));
-        methodMapping.put(java.util.Date.class, ResultSet.class.getDeclaredMethod("getDate", String.class));
+        methodMapping.put(Date.class, ResultSet.class.getDeclaredMethod("getTimestamp", String.class));
+        methodMapping.put(java.util.Date.class, ResultSet.class.getDeclaredMethod("getTimestamp", String.class));
         // TODO добавить больше дефолтных типов и возможность добавлять кастомные мапперы
     }
 
